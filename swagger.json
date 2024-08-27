@@ -1,0 +1,224 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Payment Service API",
+    "version": "1.0.0",
+    "description": "This API allows handling payments via various providers."
+  },
+  "paths": {
+    "/api/v1/deposit": {
+      "post": {
+        "summary": "Deposit a payment",
+        "description": "Process a deposit using the specified payment provider.",
+        "operationId": "depositPayment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepositRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deposit processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/withdraw": {
+      "post": {
+        "summary": "Withdraw a payment",
+        "description": "Process a withdrawal using the specified payment provider.",
+        "operationId": "withdrawPayment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WithdrawRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Withdrawal processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DepositRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "The amount to deposit."
+          },
+          "UserId": {
+            "type": "string",
+            "description": "The ID of the user making the deposit."
+          },
+          "token": {
+            "type": "string",
+            "description": "The payment method token."
+          },
+          "currency": {
+            "type": "string",
+            "description": "The currency for the deposit."
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "Unique transaction identifier."
+          },
+          "Provider": {
+            "type": "string",
+            "description": "The payment provider to use (e.g., stripe)."
+          },
+          "creditCardNumber": {
+            "type": "string",
+            "description": "The credit card number."
+          },
+          "expirationDate": {
+            "type": "string",
+            "description": "The expiration date of the credit card (YYYY-MM)."
+          },
+          "cvv": {
+            "type": "string",
+            "description": "The CVV code of the credit card."
+          }
+        }
+      },
+      "WithdrawRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "The amount to withdraw."
+          },
+          "UserId": {
+            "type": "string",
+            "description": "The ID of the user making the withdrawal."
+          },
+          "creditCardNumber": {
+            "type": "string",
+            "description": "The credit card number."
+          },
+          "expirationDate": {
+            "type": "string",
+            "description": "The expiration date of the credit card (YYYY-MM)."
+          },
+          "cvv": {
+            "type": "string",
+            "description": "The CVV code of the credit card."
+          },
+          "destination": {
+            "type": "string",
+            "description": "The destination account for the withdrawal."
+          },
+          "currency": {
+            "type": "string",
+            "description": "The currency for the withdrawal."
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "Unique transaction identifier."
+          },
+          "Provider": {
+            "type": "string",
+            "description": "The payment provider to use (e.g., authorize)."
+          }
+        }
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "PaymentId": {
+            "type": "string",
+            "description": "Unique payment identifier."
+          },
+          "RequestPayload": {
+            "type": "string",
+            "description": "The request payload."
+          },
+          "ResponsePayload": {
+            "type": "string",
+            "description": "The response payload."
+          },
+          "ChargeId": {
+            "type": "string",
+            "description": "Charge identifier (if applicable)."
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "Message": {
+            "type": "string",
+            "description": "Error message."
+          }
+        }
+      }
+    }
+  }
+}

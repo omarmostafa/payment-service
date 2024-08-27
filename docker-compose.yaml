@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: air
+    volumes:
+      - .:/app
+      - air-config:/root/.air
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=payment_service
+      - AIR_WATCH=main.go
+
+  db:
+    image: postgres:14-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=payment-service
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data:
+  air-config:
