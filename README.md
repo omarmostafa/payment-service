@@ -50,23 +50,23 @@ The service is designed to be easily extendable, allowing for the addition of mo
 ## API Endpoints
 
 - **Deposit Endpoint:**
-    - **POST** `/api/deposit`
+    - **POST** `/api/v1/deposit`
     - **Description:** Handles deposit (cash-in) requests.
     - **Parameters:** `amount`, `provider`, `currency`, etc.
 
 - **Withdrawal Endpoint:**
-    - **POST** `/api/withdraw`
+    - **POST** `/api/v1/withdraw`
     - **Description:** Handles withdrawal (cash-out) requests.
     - **Parameters:** `amount`, `provider`, `currency`, etc.
 
 ## Webhook Endpoints
 
 - **Stripe Webhook:**
-    - **POST** `/stripe-webhook`
+    - **POST** `/api/v1/stripe-webhook`
     - **Description:** Listens for asynchronous events from Stripe.
 
 - **Authorize.Net Webhook:**
-    - **POST** `/authorize-webhook`
+    - **POST** `/api/v1/authorize-webhook`
     - **Description:** Listens for asynchronous events from Authorize.Net.
 
 ## Swagger UI
